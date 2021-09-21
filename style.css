@@ -1,0 +1,23 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding:0;
+    background-color:whitesmoke;
+}
+
+h1{
+    font-size: 3em;
+    margin-bottom: 3rem;
+}
+
+p{
+    margin-bottom: 3rem;
+}
+#questionsContainer{
+    width: 100vw;
+    height:100vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
