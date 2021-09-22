@@ -1,6 +1,9 @@
-var startBtn = document.getElementById('start');
-startBtn.addEventListener('click', buttonClick)
+var startButton = document.getElementById('startBtn');
+startButton.addEventListener('click', startQuiz);
 
-function  buttonClick(){
-    console.log("You clicked the button!")
+function startQuiz(){
+    //console.log("You clicked the button!")
+    var startContainer = document.getElementById('startContainer');
+    startContainer.setAttribute("class", "start hide");
 };
+
