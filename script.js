@@ -1,4 +1,5 @@
 var nextQuestionIndex=0;
+var time = 75;
 var startButton = document.getElementById('startBtn');
 startButton.addEventListener('click', startQuiz);
 var choicesEl = document.getElementById('choices')
@@ -43,12 +44,39 @@ function nextQuestion(){
    var currentQuestion = questions[nextQuestionIndex];
    questionsEl.children[0].textContent = currentQuestion.title;
 
+   choicesEl.innerHTML = "";
+
 
 for(var i = 0; i < currentQuestion.choices.length; i++){
     var choiceBtn = document.createElement("button");
     choiceBtn.textContent = currentQuestion.choices[i];
+    choiceBtn.onclick =choiceClick;
 
     choicesEl.appendChild(choiceBtn);
 }
 
+};
+
+function choiceClick(){
+
+if (this.value !== questions[nextQuestionIndex].answer){
+time -= 10;
+if (time <0) {
+    time = 0;
 }
+nextQuestionIndex++;
+
+if (nextQuestionIndex === questions.length){
+    endQuiz();
+}
+else {
+    nextQuestion();
+}
+}
+
+function endQuiz(){
+    
+}
+
+}
+
