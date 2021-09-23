@@ -124,11 +124,13 @@ function savedHighScores(event){
     if(JSON.parse(localStorage.getItem("scores")) == null){
         scores = [scoresSubmission];
         localStorage.setItem("scores", JSON.stringify(scores));
-
-    
-        
-        
     }
+    else {
+        scores = JSON.parse(localStorage.getItem('scores'));
+        scores.push(scoresSubmission);
+        localStorage.setItem("scores", JSON.stringify(scores));
+    }
+    
 //console.log(scores);
 //console.log(newScore);
 }
