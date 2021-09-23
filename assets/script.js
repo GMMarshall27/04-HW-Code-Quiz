@@ -1,3 +1,4 @@
+//delcaring variables
 var nextQuestionIndex=0;
 var timerCount= 75;
 var timer;
@@ -12,7 +13,7 @@ var scoreEl= document.getElementById("score");
 var scoreboardEL = document.getElementById('scoreboard');
 var returnButtonEl = document.getElementById('return');
 var clearButtonEl = document.getElementById('clear');
-//var highScoresEl = document.getElementById('highScores');
+//Questions variables
 var questions = [
     {
       title: "Commonly used data types DO NOT include:",
@@ -38,14 +39,14 @@ var questions = [
     }
 
   ];
-
+//function to start the quiz
 function startQuiz(){
     //console.log("You clicked the button!")
     var startContainer = document.getElementById('startContainer');
     startContainer.setAttribute("class", "start hide");
-
+//unhidding questions
     questionsEl.setAttribute("class", "")
-
+// sets timer to start couting down
     timer = setInterval(function(){
         timerCount--;
         timerEl.textContent = timerCount;
@@ -64,36 +65,39 @@ function startQuiz(){
 
 
   
-
+// function to start next question
 function nextQuestion(){
    var currentQuestion = questions[nextQuestionIndex];
   
    questionsEl.children[0].textContent = currentQuestion.title;
-
+// hides previous questions choices
    choicesEl.innerHTML = "";
 
-
+//for loop to run through questions and there choices
 for(var i = 0; i < currentQuestion.choices.length; i++){
     var choiceBtn = document.createElement("button");
     choiceBtn.textContent = currentQuestion.choices[i];
+//adds event listener to the choices
     choiceBtn.onclick =choiceClick;
-
+//shows choices on screen
     choicesEl.appendChild(choiceBtn);
 }
 
 };
-
+//checks in answer is correct or not when clicked
 function choiceClick(event){
 var element = event.target.textContent;
 var state = questions[nextQuestionIndex].answer;
-console.log(element);
-console.log(state);
+//console.log(element);
+//console.log(state);
+// reduces time by 10 seconds when wrong answer is chosen
 if (element != state){
 timerCount -= 10;
 }
 if (timerCount <0) {
     timer = 0;
 }
+//continues to next question
 nextQuestionIndex++;
 
 if (nextQuestionIndex === questions.length){
@@ -106,26 +110,26 @@ nextQuestion();
       
     }
   
-
+//function for once quiz ends
 function endQuiz(){
-
+// finished variable for once quiz is over and unhides the content
   var finishedEl = document.getElementById("finished");
     finishedEl.setAttribute("class","");
-
-    //var scoreEl= document.getElementById("score");
+//displays score from timercount
     scoreEl.textContent = timerCount;
-    
+    //hides the questions content
     questionsEl.setAttribute("class", "hide")
-
+// submit button for scores 
     var submitButtonEl = document.getElementById("submit");
     submitButtonEl.addEventListener('click', savedHighScores)
 }
-
+// function for saved highscores
 function savedHighScores(event){
     event.preventDefault();
     var swifty = scoreEl.textContent;
     var scoresSubmission = swifty + ":" + intitialsEl.value;
     console.log(intitialsEl.value);
+    //if statement saves scores to local storage
     if(JSON.parse(localStorage.getItem("scores")) == null){
         scores = [scoresSubmission];
         localStorage.setItem("scores", JSON.stringify(scores));
@@ -139,23 +143,20 @@ function savedHighScores(event){
 }
     function displayedScores(){
         var highScoresEl = document.getElementById('highScores');
-        //scoreboardEl.setAttribute("class","");
+        //displays highscores on page
         highScoresEl.style.display = "contents";
-        //scoreEl.style.disply = "none";
-        //questionsEl.style.disply = "none";
-        //finishedEl.style.disply = "none";
-        //submitButtonEl.style.display = "none";
+        //adds event listener to clear button and clears highscores
         clearButtonEl.addEventListener('click', function(){
             localStorage.clear("scores");
             scoreboardEL.style.display = "none";
         })
+        //adds event listener to return button and returns to start of quiz
         returnButtonEl.addEventListener('click', function(){
             location.reload();
         })
-    
+    //if state running through arrays and displaying them
         if(scores != null){
             for (i=0; i < scores.length; i++){
-                //var listScore = scores[i];
                 var listName = scores[i];
                 var finalOl = document.createElement("ol")
                 finalOl.textContent = listName;
@@ -164,8 +165,4 @@ function savedHighScores(event){
         }
     
 //console.log(scores);
-//console.log(newScore);
 }
-
-
-
