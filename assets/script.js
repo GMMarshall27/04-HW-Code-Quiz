@@ -2,12 +2,17 @@ var nextQuestionIndex=0;
 var timerCount= 75;
 var timer;
 var startButton = document.getElementById('startBtn');
+var submitButton = document.getElementById('submit');
 startButton.addEventListener('click', startQuiz);
 var choicesEl = document.getElementById('choices')
 var questionsEl = document.getElementById('questionsContainer')
 var timerEl = document.getElementById('timer')
 var intitialsEl = document.getElementById('initials')
 var scoreEl= document.getElementById("score");
+var scoreboardEL = document.getElementById('scoreboard');
+var returnButtonEl = document.getElementById('return');
+var clearButtonEl = document.getElementById('clear');
+//var highScoresEl = document.getElementById('highScores');
 var questions = [
     {
       title: "Commonly used data types DO NOT include:",
@@ -130,6 +135,33 @@ function savedHighScores(event){
         scores.push(scoresSubmission);
         localStorage.setItem("scores", JSON.stringify(scores));
     }
+    displayedScores();
+}
+    function displayedScores(){
+        var highScoresEl = document.getElementById('highScores');
+        //scoreboardEl.setAttribute("class","");
+        highScoresEl.style.display = "contents";
+        //scoreEl.style.disply = "none";
+        //questionsEl.style.disply = "none";
+        //finishedEl.style.disply = "none";
+        //submitButtonEl.style.display = "none";
+        clearButtonEl.addEventListener('click', function(){
+            localStorage.clear("scores");
+            scoreboardEL.style.display = "none";
+        })
+        returnButtonEl.addEventListener('click', function(){
+            location.reload();
+        })
+    
+        if(scores != null){
+            for (i=0; i < scores.length; i++){
+                //var listScore = scores[i];
+                var listName = scores[i];
+                var finalOl = document.createElement("ol")
+                finalOl.textContent = listName;
+                scoreboardEL.appendChild(finalOl);
+            }
+        }
     
 //console.log(scores);
 //console.log(newScore);
