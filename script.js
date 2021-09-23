@@ -42,6 +42,12 @@ function startQuiz(){
     timer = setInterval(function(){
         timerCount--;
         timerEl.textContent = timerCount;
+        if(timerCount < 1){
+            console.log(timer)
+            endQuiz();
+            clearInterval(timer);
+        return;
+        }
     },1000);
 
     
@@ -54,6 +60,7 @@ function startQuiz(){
 
 function nextQuestion(){
    var currentQuestion = questions[nextQuestionIndex];
+  
    questionsEl.children[0].textContent = currentQuestion.title;
 
    choicesEl.innerHTML = "";
@@ -69,11 +76,14 @@ for(var i = 0; i < currentQuestion.choices.length; i++){
 
 };
 
-function choiceClick(answer){
-
-if (answer.textContent != questions[nextQuestionIndex].answer){
+function choiceClick(event){
+var element = event.target.textContent;
+var state = questions[nextQuestionIndex].answer;
+console.log(element);
+console.log(state);
+if (element != state){
 timerCount -= 10;
-console.log(answer)
+}
 if (timerCount <0) {
     timer = 0;
 }
@@ -82,18 +92,14 @@ nextQuestionIndex++;
 if (nextQuestionIndex === questions.length){
     endQuiz();
 }
-else {
-    nextQuestion();
-}
-}
 
+
+nextQuestion();
       
     }
   
 
 function endQuiz(){
-    clearInterval(timer);
-  timerEl.textContent = timerCount;
 
   var finishedEl = document.getElementById("finished");
     finishedEl.setAttribute("class","");
