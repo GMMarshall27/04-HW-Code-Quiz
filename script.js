@@ -1,5 +1,4 @@
 var nextQuestionIndex=0;
-var time = 75;
 var timerCount= 75;
 var timer;
 var startButton = document.getElementById('startBtn');
@@ -43,7 +42,6 @@ function startQuiz(){
     timer = setInterval(function(){
         timerCount--;
         timerEl.textContent = timerCount;
-        startTimer();
     },1000);
 
     
@@ -71,12 +69,13 @@ for(var i = 0; i < currentQuestion.choices.length; i++){
 
 };
 
-function choiceClick(){
+function choiceClick(answer){
 
-if (this.value !== questions[nextQuestionIndex].answer){
+if (answer.textContent != questions[nextQuestionIndex].answer){
 timerCount -= 10;
+console.log(answer)
 if (timerCount <0) {
-    timerCount = 0;
+    timer = 0;
 }
 nextQuestionIndex++;
 
@@ -93,7 +92,16 @@ else {
   
 
 function endQuiz(){
-    
+    clearInterval(timer);
+  timerEl.textContent = timerCount;
+
+  var finishedEl = document.getElementById("finished");
+    finishedEl.setAttribute("class","");
+
+    var scoreEl= document.getElementById("score");
+    scoreEl.textContent = timerCount;
+
+    questionsEl.setAttribute("class", "hide")
 }
 
 
