@@ -1,9 +1,12 @@
 var nextQuestionIndex=0;
 var time = 75;
+var timerCount= 75;
+var timer;
 var startButton = document.getElementById('startBtn');
 startButton.addEventListener('click', startQuiz);
 var choicesEl = document.getElementById('choices')
 var questionsEl = document.getElementById('questionsContainer')
+var timerEl = document.getElementById('timer')
 var questions = [
     {
       title: "Commonly used data types DO NOT include:",
@@ -37,8 +40,19 @@ function startQuiz(){
 
     questionsEl.setAttribute("class", "")
 
+    timer = setInterval(function(){
+        timerCount--;
+        timerEl.textContent = timerCount;
+        startTimer();
+    },1000);
+
+    
+
     nextQuestion();
 }
+
+
+  
 
 function nextQuestion(){
    var currentQuestion = questions[nextQuestionIndex];
@@ -60,9 +74,9 @@ for(var i = 0; i < currentQuestion.choices.length; i++){
 function choiceClick(){
 
 if (this.value !== questions[nextQuestionIndex].answer){
-time -= 10;
-if (time <0) {
-    time = 0;
+timerCount -= 10;
+if (timerCount <0) {
+    timerCount = 0;
 }
 nextQuestionIndex++;
 
@@ -74,9 +88,13 @@ else {
 }
 }
 
+      
+    }
+  
+
 function endQuiz(){
     
 }
 
-}
+
 
