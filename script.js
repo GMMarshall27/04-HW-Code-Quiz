@@ -6,6 +6,8 @@ startButton.addEventListener('click', startQuiz);
 var choicesEl = document.getElementById('choices')
 var questionsEl = document.getElementById('questionsContainer')
 var timerEl = document.getElementById('timer')
+var intitialsEl = document.getElementById('initials')
+var scoreEl= document.getElementById("score");
 var questions = [
     {
       title: "Commonly used data types DO NOT include:",
@@ -90,6 +92,7 @@ if (timerCount <0) {
 nextQuestionIndex++;
 
 if (nextQuestionIndex === questions.length){
+    clearInterval(timer);
     endQuiz();
 }
 
@@ -104,10 +107,30 @@ function endQuiz(){
   var finishedEl = document.getElementById("finished");
     finishedEl.setAttribute("class","");
 
-    var scoreEl= document.getElementById("score");
+    //var scoreEl= document.getElementById("score");
     scoreEl.textContent = timerCount;
-
+    
     questionsEl.setAttribute("class", "hide")
+
+    var submitButtonEl = document.getElementById("submit");
+    submitButtonEl.addEventListener('click', savedHighScores)
+}
+
+function savedHighScores(event){
+    event.preventDefault();
+    var swifty = scoreEl.textContent;
+    var scoresSubmission = swifty + ":" + intitialsEl.value;
+    console.log(intitialsEl.value);
+    if(JSON.parse(localStorage.getItem("scores")) == null){
+        scores = [scoresSubmission];
+        localStorage.setItem("scores", JSON.stringify(scores));
+
+    
+        
+        
+    }
+//console.log(scores);
+//console.log(newScore);
 }
 
 
